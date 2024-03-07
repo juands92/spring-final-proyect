@@ -2,12 +2,12 @@ package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Task {
@@ -74,5 +74,4 @@ public class Task {
 	public void setHome(Home home) {
 		this.home = home;
 	}
-	
 }

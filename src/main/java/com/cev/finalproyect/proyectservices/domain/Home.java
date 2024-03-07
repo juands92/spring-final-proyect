@@ -2,11 +2,12 @@ package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Home {
@@ -15,19 +16,19 @@ public class Home {
 	Long id;
 	String name;
 	
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "home")
 	@JsonManagedReference
 	List<User> users;
 	
-	@OneToMany(mappedBy = "tasks")
+	@OneToMany(mappedBy = "home")
 	@JsonManagedReference
 	List<Task> tasks;
 	
-	@OneToMany(mappedBy = "expenses")
+	@OneToMany(mappedBy = "home")
 	@JsonManagedReference
 	List<Expense> expenses;
 	
-	@OneToMany(mappedBy = "events")
+	@OneToMany(mappedBy = "home")
 	@JsonManagedReference
 	List<Event> events;
 	

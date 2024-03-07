@@ -2,16 +2,18 @@ package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Expense {
-
+	@Id
+	@GeneratedValue
+	Long id;
 	Long description;
 	Float amount;
 	Date date;
@@ -24,9 +26,7 @@ public class Expense {
 	@JsonBackReference
 	User user;
 	
-	@Id
-	@GeneratedValue
-	Long id;
+
 	public Long getId() {
 		return id;
 	}

@@ -4,22 +4,24 @@ package com.cev.finalproyect.proyectservices.domain;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 @Entity
+@Table(name = "app_users")
 public class User {
 	
 	@Id
 	@GeneratedValue
 	Long id;
-	String nombre;
+	String name;
 	String secondName;
 	String email;
 	Boolean termsAccepted;
@@ -29,11 +31,11 @@ public class User {
 	@JsonBackReference
 	Home home;
 	
-	@OneToMany(mappedBy = "tasks")
+	@OneToMany(mappedBy = "user")
 	@JsonManagedReference
 	List<Task> tasks;
 	
-	@OneToMany(mappedBy = "expenses")
+	@OneToMany(mappedBy = "user")
 	@JsonManagedReference
 	List<Expense> expenses;
 	
@@ -61,12 +63,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getSecondName() {
