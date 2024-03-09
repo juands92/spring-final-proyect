@@ -4,6 +4,7 @@ package com.cev.finalproyect.proyectservices.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.cev.finalproyect.proyectservices.domain.User;
@@ -34,7 +35,8 @@ public class UserPersistanceService {
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
         user.setDateOfBirth(updatedUser.getDateOfBirth());
-        user.setSecondName(updatedUser.getSecondName());
+        user.setLastName(updatedUser.getLastName());
+        user.setHome(updatedUser.getHome());
 		return userRepository.save(user);
     }
 	
@@ -48,5 +50,5 @@ public class UserPersistanceService {
    public List<User> getAllusers() {
         return userRepository.findAll();
     }
-
+   
 }

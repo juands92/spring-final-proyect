@@ -24,16 +24,19 @@ public class TaskPersistanceService {
         return taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task not found with ID: " + id));
     }
 
-    public Task createTask(Task task) {
-        return taskRepository.save(task);
+    public Task createTask(Task newTask) {
+    	 Task task = new Task();
+		 task.setDescription(newTask.getDescription());
+	     task.setDateCreated(new java.util.Date());
+	     task.setUser(newTask.getUser());
+	     return taskRepository.save(task);
     }
 
     public Task updateTask(Long id, Task updatedTask) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task not found with ID: " + id));
-   
         task.setDescription(updatedTask.getDescription());
+        task.setDateCreated(new java.util.Date());
         task.setUser(updatedTask.getUser());
-      
         return taskRepository.save(task);
     }
 

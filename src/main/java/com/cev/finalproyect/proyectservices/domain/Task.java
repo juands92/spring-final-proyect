@@ -3,29 +3,32 @@ package com.cev.finalproyect.proyectservices.domain;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Task {
-
 	@Id
 	@GeneratedValue
 	Long id;
-	Long description;
+	String description;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateCreated;
-	String status;
+	
 	
 	@ManyToOne
-	@JsonBackReference
-	User user;
-	
-	@ManyToOne
-	@JsonBackReference
-	Home home;
+    User user;
 	
 	public Long getId() {
 		return id;
@@ -35,11 +38,11 @@ public class Task {
 		this.id = id;
 	}
 
-	public Long getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(Long description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -51,14 +54,6 @@ public class Task {
 		this.dateCreated = dateCreated;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -67,11 +62,4 @@ public class Task {
 		this.user = user;
 	}
 
-	public Home getHome() {
-		return home;
-	}
-
-	public void setHome(Home home) {
-		this.home = home;
-	}
 }

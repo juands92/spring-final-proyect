@@ -1,5 +1,8 @@
 package com.cev.finalproyect.proyectservices.web;
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,12 @@ public class HomeController {
     @Autowired
     public HomeController(HomePersistanceService homePersistanceService) {
         this.homePersistanceService = homePersistanceService;
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<Home>> getAllHomes() {
+        List<Home> homes = homePersistanceService.getAllhomes();
+        return new ResponseEntity<>(homes, HttpStatus.OK);
     }
     
     @GetMapping("/{id}")

@@ -2,45 +2,35 @@ package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Home {
-	@Id
-	@GeneratedValue
-	Long id;
+
 	String name;
+	String address;
+	
 	
 	@OneToMany(mappedBy = "home")
-	@JsonManagedReference
 	List<User> users;
 	
 	@OneToMany(mappedBy = "home")
-	@JsonManagedReference
-	List<Task> tasks;
+    List<Expense> expenses;
 	
 	@OneToMany(mappedBy = "home")
-	@JsonManagedReference
-	List<Expense> expenses;
+    List<Event> events;
 	
-	@OneToMany(mappedBy = "home")
-	@JsonManagedReference
-	List<Event> events;
-	
-	
-	public List<Expense> getExpenses() {
-		return expenses;
-	}
-
-	public void setExpenses(List<Expense> expenses) {
-		this.expenses = expenses;
-	}
-
+	@Id
+	@GeneratedValue
+	Long id;
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +47,15 @@ public class Home {
 		this.name = name;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -65,12 +64,20 @@ public class Home {
 		this.users = users;
 	}
 
-	public List<Task> getTasks() {
-		return tasks;
+	public List<Expense> getExpenses() {
+		return expenses;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
 	
 }

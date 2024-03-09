@@ -25,7 +25,12 @@ public class ExpensePersistanceService {
                 .orElseThrow(() -> new EntityNotFoundException("Expense not found with ID: " + id));
     }
 
-    public Expense createExpense(Expense expense) {
+    public Expense createExpense(Expense newExpense) {
+    	Expense expense = new Expense();
+    	 expense.setDescription(newExpense.getDescription());
+         expense.setAmount(newExpense.getAmount());
+         expense.setHome(newExpense.getHome());
+         expense.setDateCreated(new java.util.Date());
         return expenseRepository.save(expense);
     }
 
@@ -33,8 +38,8 @@ public class ExpensePersistanceService {
     public Expense updateExpense(Long id, Expense updatedExpense) {
         Expense expense = getExpense(id); 
         expense.setDescription(updatedExpense.getDescription());
-        expense.setDate(updatedExpense.getDate());
         expense.setAmount(updatedExpense.getAmount());
+        expense.setHome(updatedExpense.getHome());
         return expenseRepository.save(expense);
     }
 

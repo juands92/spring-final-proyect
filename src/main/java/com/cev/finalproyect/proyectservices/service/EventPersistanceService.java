@@ -33,7 +33,7 @@ public class EventPersistanceService {
         event.setTitle(updatedEvent.getTitle());
         event.setDate(updatedEvent.getDate());
         event.setDescription(updatedEvent.getDescription());
-
+        event.setHome(updatedEvent.getHome());
         return eventRepository.save(event);
     }
 

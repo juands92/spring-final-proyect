@@ -1,51 +1,57 @@
 package com.cev.finalproyect.proyectservices.domain;
 
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "app_users")
-public class User {
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
+public class User implements UserDetails  {
 	
 	@Id
 	@GeneratedValue
 	Long id;
 	String name;
-	String secondName;
+	String lastName;
+	
 	String email;
 	Boolean termsAccepted;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateOfBirth;
 	
-	@ManyToOne
-	@JsonBackReference
-	Home home;
+	private String password;
 	
-	@OneToMany(mappedBy = "user")
-	@JsonManagedReference
-	List<Task> tasks;
-	
-	@OneToMany(mappedBy = "user")
-	@JsonManagedReference
-	List<Expense> expenses;
-	
-	public List<Expense> getExpenses() {
-		return expenses;
-	}
+    String role;
 
-	public void setExpenses(List<Expense> expenses) {
-		this.expenses = expenses;
-	}
+    @ManyToOne
+    Home home;
+    
+    @OneToMany(mappedBy = "user")
+    List<Task> tasks;
+   
 
 	public List<Task> getTasks() {
 		return tasks;
@@ -71,12 +77,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getSecondName() {
-		return secondName;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -111,4 +117,123 @@ public class User {
 		this.home = home;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+
+	/*public List<Home> getHomes() {
+		return homes;
+	}
+
+	public void setHomes(List<Home> homes) {
+		this.homes = homes;
+	}*/
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+    @Override
+    public boolean isAccountNonExpired() {
+       return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+       return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
+	public String getUsername() {
+		return email;
+	}
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(("USER")));
+	}
+
+
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
+    public static class UserBuilder {
+        private String name;
+        private String lastName;
+        private String email;
+        private Boolean termsAccepted;
+        private Date dateOfBirth;
+        private String password;
+        private String role;
+
+        public UserBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder termsAccepted(Boolean termsAccepted) {
+            this.termsAccepted = termsAccepted;
+            return this;
+        }
+
+        public UserBuilder dateOfBirth(Date dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder role(String role) {
+            this.role = role;
+            return this;
+        }
+
+
+        public User build() {
+            User user = new User();
+            user.name = this.name;
+            user.lastName = this.lastName;
+            user.email = this.email;
+            user.termsAccepted = this.termsAccepted;
+            user.dateOfBirth = this.dateOfBirth;
+            user.password = this.password;
+            user.role = this.role;
+            return user;
+        }
+    }
+    
 }
+
+
