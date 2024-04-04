@@ -27,7 +27,12 @@ public class UserPersistanceService {
 	}
 	
 	public User createUser(User user) {
-	    return userRepository.save(user);
+	    // Verificar si el correo esta ya en uso antes de la creacion de un nuevo usuario
+		String email = user.getEmail();
+		if(userRepository.findByEmail(email).isPresent()) {
+			throw new RuntimeException("Email already registered");
+		}
+		return userRepository.save(user);
 	}
 	
 	 public User updateUser(Long id, User updatedUser) {
