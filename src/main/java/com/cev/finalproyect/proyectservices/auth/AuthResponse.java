@@ -1,10 +1,17 @@
 package com.cev.finalproyect.proyectservices.auth;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AuthResponse {
     private String token;
     private String username;
     private String name;
     private String lastName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date dateOfBirth;
 
     private AuthResponse() {}
 
@@ -39,6 +46,8 @@ public class AuthResponse {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    public Date getDateOfBirth() {return dateOfBirth;}
+    public void setDateOfBirth(Date dateOfBirth) {this.dateOfBirth = dateOfBirth;}
 
     public static AuthResponseBuilder builder() {
         return new AuthResponseBuilder();
@@ -49,6 +58,8 @@ public class AuthResponse {
         private String username;
         private String name;
         private String lastName;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+        private Date dateOfBirth;
 
         public AuthResponseBuilder token(String token) {
             this.token = token;
@@ -69,6 +80,10 @@ public class AuthResponse {
             this.lastName = lastName;
             return this;
         }
+        public AuthResponseBuilder dateOfBirth(Date dateOfBirth) {
+            this.dateOfBirth = dateOfBirth;
+            return this;
+        }
 
         public AuthResponse build() {
             AuthResponse authResponse = new AuthResponse();
@@ -76,6 +91,7 @@ public class AuthResponse {
             authResponse.setUsername(this.username);
             authResponse.setName(this.name);
             authResponse.setLastName(this.lastName);
+            authResponse.setDateOfBirth(this.dateOfBirth);
             return authResponse;
         }
     }

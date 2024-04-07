@@ -12,6 +12,7 @@ import com.cev.finalproyect.proyectservices.jwt.JwtService;
 import com.cev.finalproyect.proyectservices.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class AuthService {
@@ -39,13 +40,14 @@ public class AuthService {
         String username = userDetails.getUsername();
         String name = ((User) userDetails).getName();
         String lastName = ((User) userDetails).getLastName();
-        // Obtener más datos según tu necesidad
+        Date dateOfBirth = ((User) userDetails).getDateOfBirth();
 
         return AuthResponse.builder()
                 .token(token)
                 .username(username)
                 .name(name)
                 .lastName(lastName)
+                .dateOfBirth(dateOfBirth)
                 .build();
     }
     public AuthResponse register(RegisterRequest request) {
@@ -61,6 +63,7 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .lastName(request.getLastName())
+                .dateOfBirth(request.getDateOfBirth())
                 .termsAccepted(request.getTermsAccepted())
                 .role("USER")
                 .build();
@@ -81,9 +84,10 @@ public class AuthService {
         // Devolver los datos del usuario y el token en la respuesta
         return AuthResponse.builder()
                 .token(token)
-                .username(user.getEmail())  // Puedes usar el email como nombre de usuario
+                .username(user.getEmail())
                 .name(user.getName())
                 .lastName(user.getLastName())
+                .dateOfBirth(user.getDateOfBirth())
                 .build();
     }
 
