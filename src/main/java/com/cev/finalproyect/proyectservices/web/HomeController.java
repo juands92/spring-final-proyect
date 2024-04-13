@@ -3,7 +3,6 @@ package com.cev.finalproyect.proyectservices.web;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +24,6 @@ public class HomeController {
 
     private final HomePersistanceService homePersistanceService;
 
-    @Autowired
     public HomeController(HomePersistanceService homePersistanceService) {
         this.homePersistanceService = homePersistanceService;
     }

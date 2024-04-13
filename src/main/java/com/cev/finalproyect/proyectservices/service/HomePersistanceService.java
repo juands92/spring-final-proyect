@@ -2,13 +2,10 @@ package com.cev.finalproyect.proyectservices.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cev.finalproyect.proyectservices.domain.Home;
-import com.cev.finalproyect.proyectservices.domain.User;
 import com.cev.finalproyect.proyectservices.repository.HomeRepository;
-import com.cev.finalproyect.proyectservices.repository.UserRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -17,7 +14,6 @@ public class HomePersistanceService {
 
     private final HomeRepository homeRepository;
 
-    @Autowired
     public HomePersistanceService(HomeRepository homeRepository) {
         this.homeRepository = homeRepository;
     }

@@ -1,26 +1,37 @@
 package com.cev.finalproyect.proyectservices.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id")
+
 public class Expense {
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Id
-	@GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
 	Long description;
 	Float amount;
@@ -29,8 +40,10 @@ public class Expense {
 	
 	@ManyToOne
     Home home;
-
-	public Long getId() {
+	
+	   @ManyToMany(mappedBy = "expenses", fetch = FetchType.LAZY)
+	    private List<User> users = new ArrayList<>();
+	    public Long getId() {
 		return id;
 	}
 

@@ -2,7 +2,6 @@ package com.cev.finalproyect.proyectservices.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cev.finalproyect.proyectservices.domain.Expense;
@@ -15,7 +14,6 @@ public class ExpensePersistanceService {
 
     private final ExpenseRespository expenseRepository;
 
-    @Autowired
     public ExpensePersistanceService(ExpenseRespository expenseRepository) {
         this.expenseRepository = expenseRepository;
     }

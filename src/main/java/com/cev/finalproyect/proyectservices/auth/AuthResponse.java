@@ -1,15 +1,15 @@
 package com.cev.finalproyect.proyectservices.auth;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AuthResponse {
     private String token;
     private String username;
     private String name;
     private String lastName;
+    private String error;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dateOfBirth;
 
@@ -46,11 +46,34 @@ public class AuthResponse {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public Date getDateOfBirth() {return dateOfBirth;}
-    public void setDateOfBirth(Date dateOfBirth) {this.dateOfBirth = dateOfBirth;}
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public static AuthResponseBuilder builder() {
         return new AuthResponseBuilder();
+    }
+
+    public AuthResponse(String token, String username, String name, String lastName, String error, Date dateOfBirth) {
+        this.token = token;
+        this.username = username;
+        this.name = name;
+        this.lastName = lastName;
+        this.error = error;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public static class AuthResponseBuilder {
@@ -58,6 +81,7 @@ public class AuthResponse {
         private String username;
         private String name;
         private String lastName;
+        private String error;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         private Date dateOfBirth;
 
@@ -80,6 +104,12 @@ public class AuthResponse {
             this.lastName = lastName;
             return this;
         }
+
+        public AuthResponseBuilder error(String error) {
+            this.error = error;
+            return this;
+        }
+
         public AuthResponseBuilder dateOfBirth(Date dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
             return this;
@@ -91,6 +121,7 @@ public class AuthResponse {
             authResponse.setUsername(this.username);
             authResponse.setName(this.name);
             authResponse.setLastName(this.lastName);
+            authResponse.setError(this.error);
             authResponse.setDateOfBirth(this.dateOfBirth);
             return authResponse;
         }

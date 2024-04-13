@@ -1,6 +1,7 @@
 package com.cev.finalproyect.proyectservices.auth;
 
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,9 +12,6 @@ import com.cev.finalproyect.proyectservices.domain.User;
 import com.cev.finalproyect.proyectservices.jwt.JwtService;
 import com.cev.finalproyect.proyectservices.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 @Service
 public class AuthService {
 
@@ -22,7 +20,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository, JwtService jwtService, PasswordEncoder passwordEncoder,  AuthenticationManager authenticationManager) {
+    public AuthService(UserRepository userRepository, JwtService jwtService,
+                       PasswordEncoder passwordEncoder,
+                       @Lazy AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
@@ -32,63 +32,55 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserDetails userDetails = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
+            .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado."));
         String token = jwtService.getToken(userDetails);
-
-        // Obtener los datos del usuario y devolverlos junto con el token
-        String username = userDetails.getUsername();
-        String name = ((User) userDetails).getName();
-        String lastName = ((User) userDetails).getLastName();
-        Date dateOfBirth = ((User) userDetails).getDateOfBirth();
 
         return AuthResponse.builder()
                 .token(token)
-                .username(username)
-                .name(name)
-                .lastName(lastName)
-                .dateOfBirth(dateOfBirth)
+                .username(userDetails.getUsername())
+                .name(((User) userDetails).getName())
+                .lastName(((User) userDetails).getLastName())
+                //.dateOfBirth(((User) userDetails).getDateOfBirth())
                 .build();
     }
+
     public AuthResponse register(RegisterRequest request) {
-        // Verificar si el correo electrónico ya está en uso
-        String email = request.getEmail();
-        if (userRepository.findByEmail(email).isPresent()) {
-            throw new DataIntegrityViolationException("Email already registered");
+        if (userRepository.existsByEmail(request.getEmail())) {
+            return AuthResponse.builder().error("El correo electrónico ya está en uso.").build();
         }
 
-        // Crear un nuevo usuario
         User user = User.builder()
-                .email(email)
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .name(request.getName())
                 .lastName(request.getLastName())
-                .dateOfBirth(request.getDateOfBirth())
+                //.dateOfBirth(request.getDateOfBirth())
                 .termsAccepted(request.getTermsAccepted())
                 .role("USER")
                 .build();
-
-        // Guardar el nuevo usuario en la base de datos
         userRepository.save(user);
 
-        // Obtener los detalles del usuario registrado
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
+        sendWelcomeEmail(user); // Enviar correo electrónico de bienvenida
 
-        // Generar el token JWT con los detalles del usuario registrado
-        String token = jwtService.getToken(userDetails);
-
-        // Devolver los datos del usuario y el token en la respuesta
+        String token = jwtService.getToken(user);
         return AuthResponse.builder()
                 .token(token)
                 .username(user.getEmail())
-                .name(user.getName())
-                .lastName(user.getLastName())
-                .dateOfBirth(user.getDateOfBirth())
                 .build();
     }
 
+    private void sendWelcomeEmail(User user) {
+        // Implementación de envío de correo electrónico de bienvenida
+        // Código de configuración y envío del correo electrónico
+    }
+
+    public ResponseEntity<String> forgotPassword(String email) {
+        // Implementación de la funcionalidad de olvido de contraseña
+        return ResponseEntity.ok("Correo electrónico de restablecimiento de contraseña enviado correctamente");
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

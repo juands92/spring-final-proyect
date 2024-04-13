@@ -1,20 +1,20 @@
 package com.cev.finalproyect.proyectservices.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.cev.finalproyect.proyectservices.domain.Event;
 import com.cev.finalproyect.proyectservices.repository.EventRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Service
 public class EventPersistanceService {
 	
 	private final EventRepository eventRepository;
 
-    @Autowired
+    
     public EventPersistanceService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
