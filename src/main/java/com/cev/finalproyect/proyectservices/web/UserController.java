@@ -1,6 +1,7 @@
 package com.cev.finalproyect.proyectservices.web;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
+    public ResponseEntity<User> getUser(@PathVariable UUID id) {
         User user = userPersistanceService.getUser(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -47,13 +48,13 @@ public class UserController {
   
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
         User updatedUser = userPersistanceService.updateUser(id, user);
         return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userPersistanceService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

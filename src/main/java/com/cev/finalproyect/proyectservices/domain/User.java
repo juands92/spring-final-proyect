@@ -4,7 +4,11 @@ package com.cev.finalproyect.proyectservices.domain;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
@@ -31,11 +37,12 @@ import jakarta.persistence.Table;
 public class User implements UserDetails  {
 	
 	@Id
-	@GeneratedValue
-	Long id;
+	@UuidGenerator
+	@JdbcTypeCode(java.sql.Types.VARCHAR)
+    UUID id;
+	
 	String name;
 	String lastName;
-	
 	String email;
 	Boolean termsAccepted;
 	
@@ -61,11 +68,11 @@ public class User implements UserDetails  {
 		this.tasks = tasks;
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

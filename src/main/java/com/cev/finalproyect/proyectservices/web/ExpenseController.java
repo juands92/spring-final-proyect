@@ -9,6 +9,7 @@ import com.cev.finalproyect.proyectservices.domain.Expense;
 import com.cev.finalproyect.proyectservices.service.ExpensePersistanceService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/expenses")
@@ -30,7 +31,7 @@ public class ExpenseController {
 
  
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
+    public ResponseEntity<Expense> getExpenseById(@PathVariable UUID id) {
         Expense expense = expenseService.getExpense(id);
         return new ResponseEntity<>(expense, HttpStatus.OK);
     }
@@ -42,14 +43,14 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+    public ResponseEntity<Expense> updateExpense(@PathVariable UUID id, @RequestBody Expense expense) {
         Expense updatedExpense = expenseService.updateExpense(id, expense);
         return new ResponseEntity<>(updatedExpense, HttpStatus.OK);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteExpense(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteExpense(@PathVariable UUID id) {
         expenseService.deleteExpense(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

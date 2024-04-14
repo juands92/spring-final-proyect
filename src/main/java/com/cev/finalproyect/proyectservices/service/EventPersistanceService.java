@@ -8,6 +8,7 @@ import com.cev.finalproyect.proyectservices.repository.EventRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EventPersistanceService {
@@ -19,7 +20,7 @@ public class EventPersistanceService {
         this.eventRepository = eventRepository;
     }
 
-    public Event getEvent(Long id) {
+    public Event getEvent(UUID id) {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with ID: " + id));
     }
@@ -28,7 +29,7 @@ public class EventPersistanceService {
         return eventRepository.save(event);
     }
 
-    public Event updateEvent(Long id, Event updatedEvent) {
+    public Event updateEvent(UUID id, Event updatedEvent) {
         Event event = getEvent(id);
         event.setTitle(updatedEvent.getTitle());
         event.setDate(updatedEvent.getDate());
@@ -37,7 +38,7 @@ public class EventPersistanceService {
         return eventRepository.save(event);
     }
 
-    public void deleteEvent(Long id) {
+    public void deleteEvent(UUID id) {
         if (!eventRepository.existsById(id)) {
             throw new EntityNotFoundException("Event not found with ID: " + id);
         }

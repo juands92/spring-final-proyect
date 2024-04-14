@@ -1,6 +1,10 @@
 package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.Date;
+import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,8 +24,9 @@ import jakarta.persistence.ManyToOne;
 		  property = "id")
 public class Expense {
 	@Id
-	@GeneratedValue
-	Long id;
+	@UuidGenerator
+	@JdbcTypeCode(java.sql.Types.VARCHAR)
+    UUID id;
 	Long description;
 	Float amount;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -30,11 +35,11 @@ public class Expense {
 	@ManyToOne
     Home home;
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
