@@ -12,6 +12,7 @@ import com.cev.finalproyect.proyectservices.jwt.JwtService;
 import com.cev.finalproyect.proyectservices.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
@@ -35,12 +36,14 @@ public class AuthService {
         UserDetails userDetails = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String token = jwtService.getToken(userDetails);
+        String token = jwtService.getToken(String.valueOf(((User) userDetails).getId()));
         String email =((User) userDetails).getEmail();
         String name = ((User) userDetails).getName();
         String lastName = ((User) userDetails).getLastName();
         Date dateOfBirth = ((User) userDetails).getDateOfBirth();
         UUID id = ((User) userDetails).getId();
+        byte[] profileImage = ((User) userDetails).getProfileImage();
+        String base64Image = (profileImage != null) ? Base64.getEncoder().encodeToString(profileImage) : null;
 
         return AuthResponse.builder()
         		.id(id)
@@ -49,6 +52,7 @@ public class AuthService {
                 .name(name)
                 .lastName(lastName)
                 .dateOfBirth(dateOfBirth)
+                .profileImage(base64Image)
                 .build();
     }
     public AuthResponse register(RegisterRequest request) {
@@ -71,14 +75,7 @@ public class AuthService {
    
         userRepository.save(user);
 
-    
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                new ArrayList<>()
-        );
-
-        String token = jwtService.getToken(userDetails);
+        String token = jwtService.getToken(String.valueOf(user.getId()));
 
         return AuthResponse.builder()
         		.id(user.getId())

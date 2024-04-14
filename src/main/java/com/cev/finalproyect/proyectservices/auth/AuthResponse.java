@@ -14,6 +14,7 @@ public class AuthResponse {
     private String lastName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date dateOfBirth;
+    private String profileImage;
 
     private AuthResponse() {}
     
@@ -58,6 +59,14 @@ public class AuthResponse {
     }
     public Date getDateOfBirth() {return dateOfBirth;}
     public void setDateOfBirth(Date dateOfBirth) {this.dateOfBirth = dateOfBirth;}
+    
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
 
     public static AuthResponseBuilder builder() {
         return new AuthResponseBuilder();
@@ -71,6 +80,7 @@ public class AuthResponse {
         private String lastName;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         private Date dateOfBirth;
+        private String profileImage;
         
         public AuthResponseBuilder id(UUID id) {
             this.id = id;
@@ -100,6 +110,11 @@ public class AuthResponse {
             this.dateOfBirth = dateOfBirth;
             return this;
         }
+        
+        public AuthResponseBuilder profileImage(String profileImage) {
+            this.profileImage = profileImage;
+            return this;
+        }
 
         public AuthResponse build() {
             AuthResponse authResponse = new AuthResponse();
@@ -109,6 +124,7 @@ public class AuthResponse {
             authResponse.setName(this.name);
             authResponse.setLastName(this.lastName);
             authResponse.setDateOfBirth(this.dateOfBirth);
+            authResponse.setProfileImage(this.profileImage);
             return authResponse;
         }
     }
