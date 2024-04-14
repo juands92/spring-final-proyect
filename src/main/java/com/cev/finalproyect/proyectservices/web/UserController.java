@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.cev.finalproyect.proyectservices.domain.User;
 import com.cev.finalproyect.proyectservices.service.UserPersistanceService;
+
+import io.jsonwebtoken.io.IOException;
 
 @RestController
 @RequestMapping("/users")
@@ -57,5 +62,13 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         userPersistanceService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @PutMapping("/{id}/image")
+    public ResponseEntity<User> uploadUserImage(@PathVariable UUID id, @RequestParam("image") MultipartFile file) throws java.io.IOException {
+    	User user = userPersistanceService.getUser(id);
+        user.setProfileImage(file.getBytes());
+        User updatedUser = userPersistanceService.updateUser(id, user);
+        return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
     }
 }
