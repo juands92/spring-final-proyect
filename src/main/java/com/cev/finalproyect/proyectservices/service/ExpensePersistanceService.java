@@ -1,6 +1,7 @@
 package com.cev.finalproyect.proyectservices.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ExpensePersistanceService {
         this.expenseRepository = expenseRepository;
     }
 
-    public Expense getExpense(Long id) {
+    public Expense getExpense(UUID id) {
         return expenseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Expense not found with ID: " + id));
     }
@@ -35,7 +36,7 @@ public class ExpensePersistanceService {
     }
 
 
-    public Expense updateExpense(Long id, Expense updatedExpense) {
+    public Expense updateExpense(UUID id, Expense updatedExpense) {
         Expense expense = getExpense(id); 
         expense.setDescription(updatedExpense.getDescription());
         expense.setAmount(updatedExpense.getAmount());
@@ -44,7 +45,7 @@ public class ExpensePersistanceService {
     }
 
 
-    public void deleteExpense(Long id) {
+    public void deleteExpense(UUID id) {
         if (!expenseRepository.existsById(id)) {
             throw new EntityNotFoundException("Expense not found with ID: " + id);
         }

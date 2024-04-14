@@ -13,6 +13,7 @@ import com.cev.finalproyect.proyectservices.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -35,19 +36,15 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtService.getToken(userDetails);
-
-        // Obtener el ID del usuario
-        Long userId = ((User) userDetails).getId();
-
-        // Obtener los datos del usuario y devolverlos junto con el token
-        String email = ((User) userDetails).getEmail();
+        String email =((User) userDetails).getEmail();
         String name = ((User) userDetails).getName();
         String lastName = ((User) userDetails).getLastName();
         Date dateOfBirth = ((User) userDetails).getDateOfBirth();
+        UUID id = ((User) userDetails).getId();
 
         return AuthResponse.builder()
+                .id(id)
                 .token(token)
-                .id(userId)
                 .email(email)
                 .name(name)
                 .lastName(lastName)
@@ -55,13 +52,12 @@ public class AuthService {
                 .build();
     }
     public AuthResponse register(RegisterRequest request) {
-        // Verificar si el correo electrónico ya está en uso
         String email = request.getEmail();
         if (userRepository.findByEmail(email).isPresent()) {
             throw new DataIntegrityViolationException("Email already registered");
         }
 
-        // Crear un nuevo usuario
+
         User user = User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -72,26 +68,21 @@ public class AuthService {
                 .role("USER")
                 .build();
 
-        // Guardar el nuevo usuario en la base de datos
-        User savedUser = userRepository.save(user);
 
-        // Obtener el ID del usuario registrado
-        Long userId = savedUser.getId();
+        userRepository.save(user);
 
-        // Obtener los detalles del usuario registrado
+
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
                 new ArrayList<>()
         );
 
-        // Generar el token JWT con los detalles del usuario registrado
         String token = jwtService.getToken(userDetails);
 
-        // Devolver los datos del usuario y el token en la respuesta
         return AuthResponse.builder()
+                .id(user.getId())
                 .token(token)
-                .id(userId)
                 .email(user.getEmail())
                 .name(user.getName())
                 .lastName(user.getLastName())

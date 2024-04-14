@@ -3,10 +3,11 @@ package com.cev.finalproyect.proyectservices.auth;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class AuthResponse {
+    private UUID id;
     private String token;
-    private Long id;
     private String email;
     private String name;
     private String lastName;
@@ -15,16 +16,20 @@ public class AuthResponse {
 
     private AuthResponse() {}
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getToken() {
         return token;
     }
 
     public void setToken(String token) {
         this.token = token;
-    }
-    public Long getId() { return id; }
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -42,6 +47,7 @@ public class AuthResponse {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getLastName() {
         return lastName;
     }
@@ -57,21 +63,21 @@ public class AuthResponse {
     }
 
     public static class AuthResponseBuilder {
+        private UUID id;
         private String token;
-        private Long id;
         private String email;
         private String name;
         private String lastName;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         private Date dateOfBirth;
 
-        public AuthResponseBuilder token(String token) {
-            this.token = token;
+        public AuthResponseBuilder id(UUID id) {
+            this.id = id;
             return this;
         }
 
-        public AuthResponseBuilder id(Long id) {
-            this.id = id;
+        public AuthResponseBuilder token(String token) {
+            this.token = token;
             return this;
         }
 
