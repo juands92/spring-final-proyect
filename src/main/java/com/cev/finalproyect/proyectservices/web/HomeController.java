@@ -2,6 +2,7 @@ package com.cev.finalproyect.proyectservices.web;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class HomeController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Home> getHome(@PathVariable Long id) {
+    public ResponseEntity<Home> getHome(@PathVariable UUID id) {
         Home home = homePersistanceService.getHome(id);
         return new ResponseEntity<>(home, HttpStatus.OK);
     }
@@ -49,13 +50,13 @@ public class HomeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Home> updateHome(@PathVariable Long id, @RequestBody Home home) {
+    public ResponseEntity<Home> updateHome(@PathVariable UUID id, @RequestBody Home home) {
         Home updatedHome = homePersistanceService.updateHome(id, home);
         return new ResponseEntity<>(updatedHome, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public  ResponseEntity<Void> deleteHome(@PathVariable Long id) {
+    public  ResponseEntity<Void> deleteHome(@PathVariable UUID id) {
         homePersistanceService.deleteHome(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

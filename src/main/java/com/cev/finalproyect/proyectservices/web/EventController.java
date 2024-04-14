@@ -1,6 +1,7 @@
 package com.cev.finalproyect.proyectservices.web;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
+    public ResponseEntity<Event> getEvent(@PathVariable UUID id) {
         Event event = eventService.getEvent(id);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
@@ -47,13 +48,13 @@ public class EventController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event event) {
+    public ResponseEntity<Event> updateEvent(@PathVariable UUID id, @RequestBody Event event) {
         Event updatedEvent = eventService.updateEvent(id, event);
         return new ResponseEntity<>(updatedEvent, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEvent(@PathVariable UUID id) {
         eventService.deleteEvent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

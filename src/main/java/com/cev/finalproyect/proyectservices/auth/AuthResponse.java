@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class AuthResponse {
-    private String token;
+	private UUID id;
+	private String token;
     private String username;
     private String name;
     private String lastName;
@@ -14,6 +16,14 @@ public class AuthResponse {
     private Date dateOfBirth;
 
     private AuthResponse() {}
+    
+    public UUID getId() {
+ 		return id;
+ 	}
+
+ 	public void setId(UUID id) {
+ 		this.id = id;
+ 	}
 
     public String getToken() {
         return token;
@@ -54,12 +64,18 @@ public class AuthResponse {
     }
 
     public static class AuthResponseBuilder {
+    	private UUID id;
         private String token;
         private String username;
         private String name;
         private String lastName;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         private Date dateOfBirth;
+        
+        public AuthResponseBuilder id(UUID id) {
+            this.id = id;
+            return this;
+        }
 
         public AuthResponseBuilder token(String token) {
             this.token = token;
@@ -87,6 +103,7 @@ public class AuthResponse {
 
         public AuthResponse build() {
             AuthResponse authResponse = new AuthResponse();
+            authResponse.setId(this.id);
             authResponse.setToken(this.token);
             authResponse.setUsername(this.username);
             authResponse.setName(this.name);

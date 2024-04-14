@@ -1,6 +1,10 @@
 package com.cev.finalproyect.proyectservices.domain;
 
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,13 +33,14 @@ public class Home {
     List<Event> events;
 	
 	@Id
-	@GeneratedValue
-	Long id;
-	public Long getId() {
+	@UuidGenerator
+	@JdbcTypeCode(java.sql.Types.VARCHAR)
+    UUID id;
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
