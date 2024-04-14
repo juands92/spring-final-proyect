@@ -2,12 +2,12 @@ package com.cev.finalproyect.proyectservices.auth;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AuthResponse {
     private String token;
-    private String username;
+    private Long id;
+    private String email;
     private String name;
     private String lastName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -22,13 +22,17 @@ public class AuthResponse {
     public void setToken(String token) {
         this.token = token;
     }
-
-    public String getUsername() {
-        return username;
+    public Long getId() { return id; }
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -38,7 +42,6 @@ public class AuthResponse {
     public void setName(String name) {
         this.name = name;
     }
-
     public String getLastName() {
         return lastName;
     }
@@ -55,7 +58,8 @@ public class AuthResponse {
 
     public static class AuthResponseBuilder {
         private String token;
-        private String username;
+        private Long id;
+        private String email;
         private String name;
         private String lastName;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -66,8 +70,13 @@ public class AuthResponse {
             return this;
         }
 
-        public AuthResponseBuilder username(String username) {
-            this.username = username;
+        public AuthResponseBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public AuthResponseBuilder email(String email) {
+            this.email = email;
             return this;
         }
 
@@ -87,8 +96,9 @@ public class AuthResponse {
 
         public AuthResponse build() {
             AuthResponse authResponse = new AuthResponse();
+            authResponse.setId(this.id);
             authResponse.setToken(this.token);
-            authResponse.setUsername(this.username);
+            authResponse.setEmail(this.email);
             authResponse.setName(this.name);
             authResponse.setLastName(this.lastName);
             authResponse.setDateOfBirth(this.dateOfBirth);

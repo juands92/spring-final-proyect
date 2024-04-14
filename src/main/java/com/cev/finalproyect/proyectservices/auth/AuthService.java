@@ -36,15 +36,19 @@ public class AuthService {
 
         String token = jwtService.getToken(userDetails);
 
+        // Obtener el ID del usuario
+        Long userId = ((User) userDetails).getId();
+
         // Obtener los datos del usuario y devolverlos junto con el token
-        String username = userDetails.getUsername();
+        String email = ((User) userDetails).getEmail();
         String name = ((User) userDetails).getName();
         String lastName = ((User) userDetails).getLastName();
         Date dateOfBirth = ((User) userDetails).getDateOfBirth();
 
         return AuthResponse.builder()
                 .token(token)
-                .username(username)
+                .id(userId)
+                .email(email)
                 .name(name)
                 .lastName(lastName)
                 .dateOfBirth(dateOfBirth)
@@ -69,7 +73,10 @@ public class AuthService {
                 .build();
 
         // Guardar el nuevo usuario en la base de datos
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // Obtener el ID del usuario registrado
+        Long userId = savedUser.getId();
 
         // Obtener los detalles del usuario registrado
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
@@ -84,7 +91,8 @@ public class AuthService {
         // Devolver los datos del usuario y el token en la respuesta
         return AuthResponse.builder()
                 .token(token)
-                .username(user.getEmail())
+                .id(userId)
+                .email(user.getEmail())
                 .name(user.getName())
                 .lastName(user.getLastName())
                 .dateOfBirth(user.getDateOfBirth())
