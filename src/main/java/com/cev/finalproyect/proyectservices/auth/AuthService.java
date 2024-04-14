@@ -36,7 +36,7 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtService.getToken(userDetails);
-        String username = userDetails.getUsername();
+        String email =((User) userDetails).getEmail();
         String name = ((User) userDetails).getName();
         String lastName = ((User) userDetails).getLastName();
         Date dateOfBirth = ((User) userDetails).getDateOfBirth();
@@ -45,7 +45,7 @@ public class AuthService {
         return AuthResponse.builder()
         		.id(id)
                 .token(token)
-                .username(username)
+                .email(email)
                 .name(name)
                 .lastName(lastName)
                 .dateOfBirth(dateOfBirth)
@@ -83,7 +83,7 @@ public class AuthService {
         return AuthResponse.builder()
         		.id(user.getId())
                 .token(token)
-                .username(user.getEmail())
+                .email(user.getEmail())
                 .name(user.getName())
                 .lastName(user.getLastName())
                 .dateOfBirth(user.getDateOfBirth())

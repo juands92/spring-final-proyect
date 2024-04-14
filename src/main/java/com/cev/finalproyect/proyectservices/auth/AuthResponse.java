@@ -9,7 +9,7 @@ import java.util.UUID;
 public class AuthResponse {
 	private UUID id;
 	private String token;
-    private String username;
+    private String email;
     private String name;
     private String lastName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -33,12 +33,12 @@ public class AuthResponse {
         this.token = token;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -66,7 +66,7 @@ public class AuthResponse {
     public static class AuthResponseBuilder {
     	private UUID id;
         private String token;
-        private String username;
+        private String email;
         private String name;
         private String lastName;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -82,8 +82,8 @@ public class AuthResponse {
             return this;
         }
 
-        public AuthResponseBuilder username(String username) {
-            this.username = username;
+        public AuthResponseBuilder email(String email) {
+            this.email = email;
             return this;
         }
 
@@ -105,7 +105,7 @@ public class AuthResponse {
             AuthResponse authResponse = new AuthResponse();
             authResponse.setId(this.id);
             authResponse.setToken(this.token);
-            authResponse.setUsername(this.username);
+            authResponse.setEmail(this.email);
             authResponse.setName(this.name);
             authResponse.setLastName(this.lastName);
             authResponse.setDateOfBirth(this.dateOfBirth);
