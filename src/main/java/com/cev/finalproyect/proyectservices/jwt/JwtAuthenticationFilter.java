@@ -2,6 +2,8 @@ package com.cev.finalproyect.proyectservices.jwt;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,21 +15,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.cev.finalproyect.proyectservices.service.UserDetailsServiceImpl;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    
+    @Autowired
+    @Qualifier("userDetailsServiceImpl")
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsServiceImpl userDetailsServiceImpl) {
         this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
     
     @Override
@@ -47,7 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
         {
-            UserDetails userDetails=userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails=userDetailsServiceImpl.loadUserByUsername(username);
 
             if (jwtService.isTokenValid(token, userDetails))
             {

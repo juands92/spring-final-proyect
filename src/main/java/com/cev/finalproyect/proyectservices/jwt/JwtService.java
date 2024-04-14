@@ -1,6 +1,7 @@
 package com.cev.finalproyect.proyectservices.jwt;
 
 import java.security.Key;
+import com.cev.finalproyect.proyectservices.domain.User;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

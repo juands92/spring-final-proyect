@@ -129,14 +129,6 @@ public class User implements UserDetails  {
 	}
 
 
-	/*public List<Home> getHomes() {
-		return homes;
-	}
-
-	public void setHomes(List<Home> homes) {
-		this.homes = homes;
-	}*/
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -169,7 +161,7 @@ public class User implements UserDetails  {
 
 
 	public String getUsername() {
-		return email;
+		return String.valueOf(id);
 	}
 	
 	@Override
