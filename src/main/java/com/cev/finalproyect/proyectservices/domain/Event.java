@@ -24,9 +24,8 @@ import jakarta.persistence.ManyToOne;
 		  property = "id")
 public class Event {
 	@Id
-	@UuidGenerator
-	@JdbcTypeCode(java.sql.Types.VARCHAR)
-    UUID id;
+	@GeneratedValue
+	Long id;
 	String title;
 	Long description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -35,11 +34,11 @@ public class Event {
 	@ManyToOne
     Home home;
 
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

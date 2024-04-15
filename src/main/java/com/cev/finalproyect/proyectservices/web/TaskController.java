@@ -9,7 +9,6 @@ import com.cev.finalproyect.proyectservices.domain.Task;
 import com.cev.finalproyect.proyectservices.service.TaskPersistanceService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks")
@@ -29,7 +28,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable UUID id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
         Task task = taskService.getTask(id);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
@@ -41,13 +40,13 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
         Task updatedTask = taskService.updateTask(id, task);
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTask(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

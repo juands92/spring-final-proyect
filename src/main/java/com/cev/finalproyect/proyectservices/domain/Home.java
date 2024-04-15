@@ -35,7 +35,7 @@ public class Home {
 	@Id
 	@UuidGenerator
 	@JdbcTypeCode(java.sql.Types.VARCHAR)
-    UUID id;
+    	UUID id;
 	public UUID getId() {
 		return id;
 	}
