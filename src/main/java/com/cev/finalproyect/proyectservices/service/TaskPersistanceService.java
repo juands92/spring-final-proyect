@@ -1,7 +1,6 @@
 package com.cev.finalproyect.proyectservices.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class TaskPersistanceService {
         this.taskRepository = taskRepository;
     }
 
-    public Task getTask(UUID id) {
+    public Task getTask(Long id) {
         return taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task not found with ID: " + id));
     }
 
@@ -33,7 +32,7 @@ public class TaskPersistanceService {
 	     return taskRepository.save(task);
     }
 
-    public Task updateTask(UUID id, Task updatedTask) {
+    public Task updateTask(Long id, Task updatedTask) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Task not found with ID: " + id));
         task.setDescription(updatedTask.getDescription());
         task.setDateCreated(new java.util.Date());
@@ -41,7 +40,7 @@ public class TaskPersistanceService {
         return taskRepository.save(task);
     }
 
-    public void deleteTask(UUID id) {
+    public void deleteTask(Long id) {
         if (!taskRepository.existsById(id)) {
             throw new EntityNotFoundException("Task not found with ID: " + id);
         }
