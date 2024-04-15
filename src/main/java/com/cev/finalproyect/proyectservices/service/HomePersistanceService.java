@@ -1,7 +1,6 @@
 package com.cev.finalproyect.proyectservices.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class HomePersistanceService {
         this.homeRepository = homeRepository;
     }
 
-    public Home getHome(UUID id) {
+    public Home getHome(Long id) {
         return homeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Home not found with ID: " + id));
     }
 
@@ -32,7 +31,7 @@ public class HomePersistanceService {
     }
 
 
-    public Home updateHome(UUID id, Home updatedHome) {
+    public Home updateHome(Long id, Home updatedHome) {
         Home home = getHome(id);
         home.setName(updatedHome.getName());
         home.setAddress(updatedHome.getAddress());
@@ -40,7 +39,7 @@ public class HomePersistanceService {
     }
 
 
-    public void deleteHome(UUID id) {
+    public void deleteHome(Long id) {
         if (!homeRepository.existsById(id)) {
             throw new EntityNotFoundException("Home not found with ID: " + id);
         }
