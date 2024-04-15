@@ -33,13 +33,14 @@ public class Home {
     List<Event> events;
 	
 	@Id
-	@GeneratedValue
-	Long id;
-	public Long getId() {
+	@UuidGenerator
+	@JdbcTypeCode(java.sql.Types.VARCHAR)
+    	UUID id;
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
