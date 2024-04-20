@@ -37,22 +37,11 @@ public class AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         String token = jwtService.getToken(String.valueOf(((User) userDetails).getId()));
-        String email =((User) userDetails).getEmail();
-        String name = ((User) userDetails).getName();
-        String lastName = ((User) userDetails).getLastName();
-        Date dateOfBirth = ((User) userDetails).getDateOfBirth();
         UUID id = ((User) userDetails).getId();
-        byte[] profileImage = ((User) userDetails).getProfileImage();
-        String base64Image = (profileImage != null) ? Base64.getEncoder().encodeToString(profileImage) : null;
 
         return AuthResponse.builder()
         		.id(id)
                 .token(token)
-                .email(email)
-                .name(name)
-                .lastName(lastName)
-                .dateOfBirth(dateOfBirth)
-                .profileImage(base64Image)
                 .build();
     }
     public AuthResponse register(RegisterRequest request) {
@@ -80,10 +69,6 @@ public class AuthService {
         return AuthResponse.builder()
         		.id(user.getId())
                 .token(token)
-                .email(user.getEmail())
-                .name(user.getName())
-                .lastName(user.getLastName())
-                .dateOfBirth(user.getDateOfBirth())
                 .build();
     }
 

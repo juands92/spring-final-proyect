@@ -1,10 +1,14 @@
 package com.cev.finalproyect.proyectservices.web;
 
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cev.finalproyect.proyectservices.domain.User;
 import com.cev.finalproyect.proyectservices.service.UserPersistanceService;
-
-import io.jsonwebtoken.io.IOException;
 
 @RestController
 @RequestMapping("/users")
@@ -52,11 +54,12 @@ public class UserController {
     }
   
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
-        User updatedUser = userPersistanceService.updateUser(id, user);
-        return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
+   @PutMapping(value = "/{id}", consumes = "application/json")
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody Map<String, Object> updates) {
+        User updatedUser = userPersistanceService.updateUser(id, updates);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
@@ -64,11 +67,19 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
-    @PutMapping("/{id}/image")
+    
+    @PutMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<User> uploadUserImage(@PathVariable UUID id, @RequestParam("image") MultipartFile file) throws java.io.IOException {
-    	User user = userPersistanceService.getUser(id);
-        user.setProfileImage(file.getBytes());
-        User updatedUser = userPersistanceService.updateUser(id, user);
-        return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("File is empty, cannot update user image.");
+        }
+
+        String imageBase64 = Base64.getEncoder().encodeToString(file.getBytes());
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("profileImage", "data:image/png;base64," + imageBase64);
+
+        User updatedUser = userPersistanceService.updateUser(id, updates);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
 }
