@@ -11,9 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginRequest {
 	String email;
-    String password; 
-    
+    String password;
+	private boolean rememberUser;
+	public boolean isRememberUser() {
+		return rememberUser;
+	}
 
+	public void setRememberUser(boolean rememberUser) {
+		this.rememberUser = rememberUser;
+	}
 	public String getEmail() {
 		return email;
 	}

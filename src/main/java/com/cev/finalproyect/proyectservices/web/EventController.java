@@ -58,5 +58,18 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    //Mostrar eventos pendientes
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<Event>> getPendingEvents() {
+        List<Event> pendingEvents = eventService.getPendingEvents();
+        return new ResponseEntity<>(pendingEvents, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Event> completeEvent(@PathVariable Long id){
+        Event completedEvent = eventService.completeEvent(id);
+        return ResponseEntity.ok(completedEvent);
+    }
  
 }

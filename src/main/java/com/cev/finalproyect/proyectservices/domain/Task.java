@@ -29,8 +29,13 @@ public class Task {
 	String description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateCreated;
-	
-	
+
+
+
+	// Filtrar por tareas completas o pendientes.
+	private boolean completed;
+
+
 	@ManyToOne
     User user;
 	
@@ -61,7 +66,13 @@ public class Task {
 	public User getUser() {
 		return user;
 	}
+	public boolean isCompleted() {
+		return completed;
+	}
 
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
 	public void setUser(User user) {
 		this.user = user;
 	}

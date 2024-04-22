@@ -27,10 +27,14 @@ public class Event {
 	@GeneratedValue
 	Long id;
 	String title;
-	Long description;
+	String description;
+
+
+	boolean completed; //Evento completdo o pendiente
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date date;
-	
+
 	@ManyToOne
     Home home;
 
@@ -50,11 +54,11 @@ public class Event {
 		this.title = title;
 	}
 
-	public Long getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(Long description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -72,6 +76,14 @@ public class Event {
 
 	public void setHome(Home home) {
 		this.home = home;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	}
 
 }

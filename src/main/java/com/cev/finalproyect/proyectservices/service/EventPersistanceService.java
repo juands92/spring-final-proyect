@@ -34,6 +34,7 @@ public class EventPersistanceService {
         event.setDate(updatedEvent.getDate());
         event.setDescription(updatedEvent.getDescription());
         event.setHome(updatedEvent.getHome());
+        event.setCompleted(false);
         return eventRepository.save(event);
     }
 
@@ -46,5 +47,16 @@ public class EventPersistanceService {
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
+    }
+
+    public List<Event> getPendingEvents() {
+        return eventRepository.findByCompletedFalse(); //Filtro para eventos pendientes.
+    }
+
+    public Event completeEvent (Long id){
+        Event event = eventRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Event not found with ID: " + id));
+        event.setCompleted(true);
+        return eventRepository.save(event);
+
     }
 }

@@ -45,6 +45,8 @@ public class User implements UserDetails  {
 	String name;
 	String lastName;
 	String email;
+
+    //Cambio de la duracion del token
 	Boolean termsAccepted;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

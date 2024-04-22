@@ -1,6 +1,5 @@
 package com.cev.finalproyect.proyectservices.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ public class TaskController {
 
     private final TaskPersistanceService taskService;
 
-    @Autowired
     public TaskController(TaskPersistanceService taskService) {
         this.taskService = taskService;
     }
@@ -49,5 +47,18 @@ public class TaskController {
     public ResponseEntity<?> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Mostrar tareas pendientes
+    @GetMapping("/pending")
+    public ResponseEntity<List<Task>> getPendingTasks() {
+        List<Task> pendingTasks = taskService.getPendingTasks();
+        return new ResponseEntity<>(pendingTasks, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/complete")
+    public ResponseEntity<Task> completeTask(@PathVariable Long id) {
+        Task completedTask = taskService.completeTask(id);
+        return ResponseEntity.ok(completedTask);
     }
 }
