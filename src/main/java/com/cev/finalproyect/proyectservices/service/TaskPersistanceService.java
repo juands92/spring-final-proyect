@@ -62,6 +62,6 @@ public class TaskPersistanceService {
         task.setCompleted(true); // Cambia el estado a completado
         return taskRepository.save(task); // Guarda la tarea actualizada en la base de datos
     }
-
+//Cambios
 
 }
