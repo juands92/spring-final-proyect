@@ -29,6 +29,7 @@ public class TaskPersistanceService {
 		 task.setDescription(newTask.getDescription());
 	     task.setDateCreated(new java.util.Date());
 	     task.setUser(newTask.getUser());
+	     task.setStatus(newTask.getStatus());
 	     return taskRepository.save(task);
     }
 
@@ -37,6 +38,7 @@ public class TaskPersistanceService {
         task.setDescription(updatedTask.getDescription());
         task.setDateCreated(new java.util.Date());
         task.setUser(updatedTask.getUser());
+        task.setStatus(updatedTask.getStatus());
         return taskRepository.save(task);
     }
 
