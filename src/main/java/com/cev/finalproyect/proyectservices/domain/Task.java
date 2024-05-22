@@ -29,8 +29,8 @@ public class Task {
 	String description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateCreated;
-	
-	
+	Integer status;
+
 	@ManyToOne
     User user;
 	
@@ -56,6 +56,15 @@ public class Task {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+	
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public User getUser() {
