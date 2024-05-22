@@ -30,6 +30,9 @@ public class Home {
     List<Expense> expenses;
 	
 	@OneToMany(mappedBy = "home")
+    List<Task> tasks;
+	
+	@OneToMany(mappedBy = "home")
     List<Event> events;
 	
 	@Id
@@ -75,6 +78,14 @@ public class Home {
 
 	public void setExpenses(List<Expense> expenses) {
 		this.expenses = expenses;
+	}
+	
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	public List<Event> getEvents() {

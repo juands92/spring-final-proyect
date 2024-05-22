@@ -64,6 +64,16 @@ public class User implements UserDetails  {
     @OneToMany(mappedBy = "user")
     List<Task> tasks;
    
+    @OneToMany(mappedBy = "user")
+    List<Expense> expenses;
+
+	public List<Expense> getExpenses() {
+		return expenses;
+	}
+
+	public void setExpenses(List<Expense> expenses) {
+		this.expenses = expenses;
+	}
 
 	public List<Task> getTasks() {
 		return tasks;

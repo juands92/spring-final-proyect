@@ -30,6 +30,9 @@ public class Task {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateCreated;
 	Integer status;
+	
+	@ManyToOne
+    Home home;
 
 	@ManyToOne
     User user;
@@ -65,6 +68,14 @@ public class Task {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public Home getHome() {
+		return home;
+	}
+
+	public void setHome(Home home) {
+		this.home = home;
 	}
 
 	public User getUser() {

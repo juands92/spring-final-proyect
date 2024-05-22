@@ -29,6 +29,7 @@ public class ExpensePersistanceService {
     	Expense expense = new Expense();
     	 expense.setDescription(newExpense.getDescription());
          expense.setAmount(newExpense.getAmount());
+         expense.setUser(newExpense.getUser());
          expense.setHome(newExpense.getHome());
          expense.setDateCreated(new java.util.Date());
         return expenseRepository.save(expense);
@@ -40,6 +41,7 @@ public class ExpensePersistanceService {
         expense.setDescription(updatedExpense.getDescription());
         expense.setAmount(updatedExpense.getAmount());
         expense.setHome(updatedExpense.getHome());
+        expense.setUser(updatedExpense.getUser());
         return expenseRepository.save(expense);
     }
 

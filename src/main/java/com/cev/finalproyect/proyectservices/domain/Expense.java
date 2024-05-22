@@ -26,10 +26,13 @@ public class Expense {
 	@Id
 	@GeneratedValue
 	Long id;
-	Long description;
+	String description;
 	Float amount;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date dateCreated;
+	
+	@ManyToOne
+    User user;
 	
 	@ManyToOne
     Home home;
@@ -42,11 +45,11 @@ public class Expense {
 		this.id = id;
 	}
 
-	public Long getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(Long description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -72,5 +75,13 @@ public class Expense {
 
 	public void setHome(Home home) {
 		this.home = home;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
