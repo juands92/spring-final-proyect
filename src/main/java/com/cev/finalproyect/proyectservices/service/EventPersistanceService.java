@@ -11,8 +11,8 @@ import java.util.List;
 
 @Service
 public class EventPersistanceService {
-	
-	private final EventRepository eventRepository;
+
+    private final EventRepository eventRepository;
 
     @Autowired
     public EventPersistanceService(EventRepository eventRepository) {
@@ -32,7 +32,6 @@ public class EventPersistanceService {
         Event event = getEvent(id);
         event.setTitle(updatedEvent.getTitle());
         event.setDate(updatedEvent.getDate());
-        event.setDescription(updatedEvent.getDescription());
         event.setHome(updatedEvent.getHome());
         return eventRepository.save(event);
     }

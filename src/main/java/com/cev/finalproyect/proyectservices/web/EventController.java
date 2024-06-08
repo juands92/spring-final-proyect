@@ -27,7 +27,7 @@ public class EventController {
     public EventController(EventPersistanceService eventService) {
         this.eventService = eventService;
     }
-    
+
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
@@ -57,6 +57,5 @@ public class EventController {
         eventService.deleteEvent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
- 
 }
+
