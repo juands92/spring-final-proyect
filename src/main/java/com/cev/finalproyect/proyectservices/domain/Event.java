@@ -27,7 +27,6 @@ public class Event {
 	@GeneratedValue
 	Long id;
 	String title;
-	Long description;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	Date date;
 	
@@ -48,14 +47,6 @@ public class Event {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public Long getDescription() {
-		return description;
-	}
-
-	public void setDescription(Long description) {
-		this.description = description;
 	}
 
 	public Date getDate() {
